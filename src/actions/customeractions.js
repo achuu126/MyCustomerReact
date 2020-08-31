@@ -142,7 +142,7 @@ export function deleteCustomer(customer) {
   return dispatch => {
     dispatch(deleteCustomerBegin());
     axios
-    .delete("http://localhost:8080/customers/deleteCustomer", customer)
+    .post("http://localhost:8080/customers/deleteCustomer", customer)
     .then(response => {
       console.log(response.data);
       dispatch(deleteCustomerSuccess(response.data));

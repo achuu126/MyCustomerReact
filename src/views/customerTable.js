@@ -4,6 +4,8 @@ import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Delete from "./img/Trash.png";
 import Edit from "./img/Modify.png";
+import { useDispatch } from 'react-redux';
+import {deleteCustomer, fetchCustomers} from '../actions/customeractions';
 
 function  CustomerTable (props){
     console.log("begin table props cust" + props.customers);
@@ -11,35 +13,44 @@ function  CustomerTable (props){
     console.log(props);
     //const customers = props.customers;
   
-    
+    const dispatch = useDispatch();
 
     useEffect(()=>{
         
             console.log("calling effect");
-                setCustomers(props.customers);
+             setCustomers(props.customers);
+            //fetchCustomers();
+            // dispatch(fetchCustomers())
+            // return()=>{};
     });
 
     console.log("cust table " +customers.length); 
 
-
-async function deleteCustomer(customer) {
-    try{
-        await Axios.post("http://localhost:8080/customers/deleteCustomer", customer)
-        await Axios.get("http://localhost:8080/customers/getCustomers")
-        .then(response => {
-            setCustomers(response.data);
-            console.log("get customer result " +response.data);
-            props.deleteCustomer(response.data);
-            // console.log("get customer result" +response.data);
-            // console.log("current customer result" +customers);
-            // console.log("get customer " +customers);
-        });
-        
-        }catch(error){
-            console.log(error);
-        }
-    
+    function deleteCust(cust)
+    {
+        console.log("delete cust " + cust);
+        dispatch(deleteCustomer(cust));
+        props.deleteCustomer();
     }
+    
+// async function deleteCust(customer) {
+//     // try{
+//     //     await Axios.post("http://localhost:8080/customers/deleteCustomer", customer)
+//     //     await Axios.get("http://localhost:8080/customers/getCustomers")
+//     //     .then(response => {
+//     //         setCustomers(response.data);
+//     //         console.log("get customer result " +response.data);
+//     //         props.deleteCustomer(response.data);
+//     //         // console.log("get customer result" +response.data);
+//     //         // console.log("current customer result" +customers);
+//     //         // console.log("get customer " +customers);
+//     //     });
+        
+//     //     }catch(error){
+//     //         console.log(error);
+//     //     }
+//     dispatch(deleteCustomer (customer));
+//     }
     
     const history = useHistory();
 
@@ -53,7 +64,8 @@ async function deleteCustomer(customer) {
                 customers.map(function(customer, i) {
                 return (
                 <tr key={i}>
-                    <td><button className="buttonImg" onClick={() => {deleteCustomer(customer)}}><img src={Delete}/></button></td>
+                   
+                    <td><button className="buttonImg" onClick={() => { deleteCust (customer)}}><img src={Delete}/></button></td>
                     <td><button className="buttonImg" onClick={() =>history.push({pathname:'/customerupdate',customer: {customer}})}><img src={Edit}/></button></td>
                     <td>{customer.firstName}</td>
                     <td>{customer.lastName}</td>
@@ -95,3 +107,5 @@ async function deleteCustomer(customer) {
  
 
 export default CustomerTable;
+
+{/* <td><button className="buttonImg" onClick={() => {deleteCustomer(customer)}}><img src={Delete}/></button></td> */}
