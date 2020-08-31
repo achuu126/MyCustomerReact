@@ -107,6 +107,30 @@ export function fetchCustomers() {
   }
 }
 
+export function searchCustomers(customer) {
+  return dispatch => {
+    dispatch(fetchCustomersBegin());
+    axios
+    .post("http://localhost:8080/customers/searchCustomers", customer) //, {
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      //   'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+      // }
+      // ,
+      // proxy: {
+      //   host: '104.236.174.88',
+      //   port: 8080
+      // }
+      // })
+    .then(response => {
+      console.log("Fectch customer action: ");
+      console.log( response.data);
+      dispatch(fetchCustomersSuccess(response.data));
+    })
+    .catch(error => dispatch(fetchCustomersFailure(error)));
+    
+  }
+}
 
 export function addCustomer(customer) {
   // console.log(customer);
@@ -142,7 +166,7 @@ export function deleteCustomer(customer) {
   return dispatch => {
     dispatch(deleteCustomerBegin());
     axios
-    .delete("http://localhost:8080/customers/deleteCustomer", customer)
+    .post("http://localhost:8080/customers/deleteCustomer", customer)
     .then(response => {
       console.log(response.data);
       dispatch(deleteCustomerSuccess(response.data));
@@ -150,8 +174,12 @@ export function deleteCustomer(customer) {
     .catch(error => dispatch(deleteCustomerFailure(error)));
   }
 }
+const initialState ={
+  customers: [],
+  customer: {}
+}
 
 //TODO THIS IS NOT WORKING WITH ROOT REDUCER
-export const store = createStore(customersReducer, applyMiddleware(thunk));
+export const store = createStore(customersReducer, initialState, applyMiddleware(thunk));
 
 

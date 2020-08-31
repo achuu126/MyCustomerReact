@@ -49,8 +49,9 @@ class CustomerList extends Component {
           <h3>Customer List</h3>
           
         </div>
-        
+                
       <br></br>
+      
       {this.props.customers.length>0 &&
        <CustomerTable customers={this.props.customers} deleteCustomer={this.deleteCust.bind(this)}/>
       }
