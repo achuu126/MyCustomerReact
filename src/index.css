@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", Arial,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-left: 50px;
+  padding-right: 50px;
+  text-decoration: none;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
