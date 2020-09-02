@@ -80,7 +80,7 @@ function  Search (props){
         }   
         return null;
     }
-    console.log("render table");
+    
     return(
         
         <div className="container">
